@@ -4,50 +4,47 @@ const { Products } = require('../models/product.model');
 
 module.exports = {
     createCartService: async (cartData) => {
-        if (cartData.type === "CREATE-CART") {
-            try {
-                let result = await Carts.create(cartData);
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
-            }
+        try {
+            let result = await Carts.create(cartData);
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
+    },
 
-        if (cartData.type === "ADD-PRODUCT") {
-            try {
-                let myCart = await Carts.findById(cartData.cartId).exec();
-                for (let i = 0; i < cartData.productArr.length; i++) {
-                    let product = cartData.productArr[i];
-                    myCart.products.push(product);
-                    // const { price } = await Products.findById(product.productId);
-                    // myCart.totalPrice += (price * product.quantity);
-                }
-                let result = await myCart.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    addProductService: async (cartData) => {
+        try {
+            let myCart = await Carts.findById(cartData.cartId).exec();
+            for (let i = 0; i < cartData.productArr.length; i++) {
+                let product = cartData.productArr[i];
+                myCart.products.push(product);
+                // const { price } = await Products.findById(product.productId);
+                // myCart.totalPrice += (price * product.quantity);
             }
+            let result = await myCart.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
+    },
 
-        if (cartData.type === "REMOVE-PRODUCT") {
-            try {
-                let myCart = await Carts.findById(cartData.cartId).exec();
-                for (let i = 0; i < cartData.productArr.length; i++) {
-                    let product = (await myCart.products.find(async (x) => { await x.productId.toString() === cartData.productArr[i]; }));
-                    myCart.products.pull(product);
-                    // const { price } = await Products.findById(product.productId);
-                    // myCart.totalPrice -= (price * product.quantity);
-                }
-                let result = await myCart.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    removeProductService: async (cartData) => {
+        try {
+            let myCart = await Carts.findById(cartData.cartId).exec();
+            for (let i = 0; i < cartData.productArr.length; i++) {
+                let product = (await myCart.products.find(async (x) => { await x.productId.toString() === cartData.productArr[i]; }));
+                myCart.products.pull(product);
+                // const { price } = await Products.findById(product.productId);
+                // myCart.totalPrice -= (price * product.quantity);
             }
+            let result = await myCart.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
-
     },
 
     getAllCartService: async (queryString) => {

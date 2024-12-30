@@ -3,11 +3,15 @@ const {
     getUserByNameService,
     getAllUserService,
     updateUserByIdService,
-    deleteUserByIdService
+    deleteUserByIdService,
+    addCartService,
+    removeCartService,
+    addOrderService,
+    removeOrderService
 } = require('../services/userService')
 
 module.exports = {
-    postCreateUser: async (req, res) =>   {
+    postCreateUser: async (req, res) => {
         let result = await createUserService(req.body);
         if (result)
             return res.status(200).json({
@@ -21,7 +25,63 @@ module.exports = {
             });
     },
 
-    getUserByName: async (req, res) =>  {
+    postAddCart: async (req, res) => {
+        let result = await addCartService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    postRemoveCart: async (req, res) => {
+        let result = await removeCartService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    postAddOrder: async (req, res) => {
+        let result = await addOrderService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    postRemoveOrder: async (req, res) => {
+        let result = await removeOrderService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    getUserByName: async (req, res) => {
         let result = await getUserByNameService(req.body);
         if (result)
             return res.status(200).json({

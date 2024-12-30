@@ -2,12 +2,42 @@ const {
     createCartService,
     getAllCartService,
     deleteCartByIdService,
-    updateCartByIdService
+    updateCartByIdService,
+    removeProductService,
+    addProductService
 } = require('../services/cartService.js')
 
 module.exports = {
     postCreateCart: async (req, res) => {
         let result = await createCartService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    postAddProduct: async (req, res) => {
+        let result = await addProductService(req.body);
+        if (result)
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        else
+            return res.status(200).json({
+                EC: -1,
+                data: result
+            });
+    },
+
+    postRemoveProduct: async (req, res) => {
+        let result = await removeProductService(req.body);
         if (result)
             return res.status(200).json({
                 EC: 0,

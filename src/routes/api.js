@@ -11,7 +11,9 @@ const {
     postCreateCart,
     getAllCart,
     deleteCart,
-    putUpdateCart
+    putUpdateCart,
+    postAddProduct,
+    postRemoveProduct
 } = require('../controller/cartController.js');
 
 const {
@@ -33,7 +35,11 @@ const {
     getUserByName,
     getAllUser,
     deleteUser,
-    putUpdateUser
+    putUpdateUser,
+    postAddCart,
+    postRemoveCart,
+    postAddOrder,
+    postRemoveOrder
 } = require('../controller/userController.js')
 
 routerAPI.get('/test', (req, res) => {
@@ -48,6 +54,8 @@ routerAPI.put('/product', putUpdateProduct);
 
 //Cart
 routerAPI.post('/cart', postCreateCart);
+routerAPI.post('/cart/add-product', postAddProduct);
+routerAPI.post('/cart/remove-product', postRemoveProduct);
 routerAPI.get('/cart', getAllCart);
 routerAPI.delete('/cart', deleteCart);
 routerAPI.put('/cart', putUpdateCart);
@@ -72,5 +80,9 @@ routerAPI.get('/login', getUserByName);
 routerAPI.get('/user', getAllUser);
 routerAPI.delete('/user', deleteUser);
 routerAPI.put('/user', putUpdateUser);
+routerAPI.post('/user/add-cart', postAddCart);
+routerAPI.post('/user/remove-cart', postRemoveCart);
+routerAPI.post('/user/add-order', postAddOrder);
+routerAPI.post('/user/remove-order', postRemoveOrder);
 
 module.exports = routerAPI;

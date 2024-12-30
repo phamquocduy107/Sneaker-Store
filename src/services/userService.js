@@ -3,77 +3,74 @@ const { Users } = require('../models/user.model')
 const aqp = require('api-query-params');
 module.exports = {
     createUserService: async (data) => {
-        if (data.type === "CREATE-USER") {
-            try {
-                let { name } = data;
-                let checkedName = await Users.findOne({ name: name });
-                if (checkedName) {
-                    return null;
-                }
-                else
-                    return await Users.create(data);
-            } catch (error) {
-                console.log('error:', error);
+        try {
+            let { name } = data;
+            let checkedName = await Users.findOne({ name: name });
+            if (checkedName) {
                 return null;
             }
+            else
+                return await Users.create(data);
+        } catch (error) {
+            console.log('error:', error);
+            return null;
         }
+    },
 
-        if (data.type === "ADD-CART") {
-            try {
-                let myCustomer = await Users.findById(data.id).exec();
-                for (let i = 0; i < data.cartArr.length; i++) {
-                    myCustomer.carts.push(data.cartArr[i])
-                }
-                let result = await myCustomer.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    addCartService: async (data) => {
+        try {
+            let myCustomer = await Users.findById(data.id).exec();
+            for (let i = 0; i < data.cartArr.length; i++) {
+                myCustomer.carts.push(data.cartArr[i])
             }
+            let result = await myCustomer.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
+    },
 
-        if (data.type === "REMOVE-CART") {
-            try {
-                let myCustomer = await Users.findById(data.id).exec();
-                for (let i = 0; i < data.cartArr.length; i++) {
-                    myCustomer.carts.pull(data.cartArr[i])
-                }
-                let result = await myCustomer.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    removeCartService: async (data) => {
+        try {
+            let myCustomer = await Users.findById(data.id).exec();
+            for (let i = 0; i < data.cartArr.length; i++) {
+                myCustomer.carts.pull(data.cartArr[i])
             }
+            let result = await myCustomer.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
+    },
 
-        if (data.type === "ADD-ORDER") {
-            try {
-                let myCustomer = await Users.findById(data.id).exec();
-                for (let i = 0; i < data.cartArr.length; i++) {
-                    myCustomer.orders.push(data.cartArr[i])
-                }
-                let result = await myCustomer.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    addOrderService: async (data) => {
+        try {
+            let myCustomer = await Users.findById(data.id).exec();
+            for (let i = 0; i < data.cartArr.length; i++) {
+                myCustomer.orders.push(data.cartArr[i])
             }
+            let result = await myCustomer.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
+    },
 
-        if (data.type === "REMOVE-ORDER") {
-            try {
-                let myCustomer = await Users.findById(data.id).exec();
-                for (let i = 0; i < data.cartArr.length; i++) {
-                    myCustomer.orders.pull(data.cartArr[i])
-                }
-                let result = await myCustomer.save();
-                return result;
-            } catch (error) {
-                console.log(error);
-                return null;
+    removeOrderService: async (data) => {
+        try {
+            let myCustomer = await Users.findById(data.id).exec();
+            for (let i = 0; i < data.cartArr.length; i++) {
+                myCustomer.orders.pull(data.cartArr[i])
             }
+            let result = await myCustomer.save();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return null;
         }
-
     },
 
     getUserByNameService: async (data) => {
